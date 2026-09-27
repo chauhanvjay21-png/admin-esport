@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fire Esports Season - 1 | Official Receipt Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        const PASSWORD = "KKKe@game123";  // <-- Change your password here
+
+        function checkPassword() {
+            const enteredPassword = prompt("🔐 Wlecome User Kindly Enter the Password:");
+
+            if (enteredPassword === PASSWORD) {
+                document.body.style.display = "block";
+            } else {
+                alert("❌ Incorrect password! You should contact the Technical Support");
+                document.body.innerHTML = `
+                    <div style="text-align:center; margin-top:100px;">
+                        <h2>🔒 Access Denied</h2>
+                        <p>Incorrect password.</p>
+                        <button onclick="location.reload()">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+
+        window.onload = function () {
+            document.body.style.display = "none";
+            checkPassword();
+        };
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#7c3aed;--p2:#6d28d9;--p3:#4c1d95;
+  --bg:#f8fafc;--bg2:#f1f5f9;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --ok:#16a34a;--ok-bg:#f0fdf4;--err:#dc2626;--err-bg:#fef2f2;
+  --radius:16px;--radius-sm:10px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);padding-bottom:60px}
+.topbar{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:50}
+.topbar-inner{max-width:1150px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--p3)}
+.wrap{max-width:1150px;margin:0 auto;padding:26px 24px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:var(--radius);padding:22px;box-shadow:0 4px 12px rgba(0,0,0,0.03);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px}
+@media(max-width:850px){ .grid{grid-template-columns:1fr;} }
+
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:12px}
+.fgroup{display:flex;flex-direction:column;gap:6px}
+.fgroup label{font-size:0.7rem;font-weight:700;color:var(--text2);text-transform:uppercase}
+.fgroup input,.fgroup select{background:var(--bg);border:1.5px solid #cbd5e1;border-radius:var(--radius-sm);padding:10px;font-size:0.87rem;outline:none}
+
+.btn{padding:10px 18px;border:none;border-radius:var(--radius-sm);font-weight:700;font-size:0.85rem;cursor:pointer;transition:0.15s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary{background:var(--p);color:#fff}
+.btn-primary:hover{background:var(--p2)}
+.btn-success{background:var(--ok);color:#fff}
+.btn-ghost{background:var(--bg2);color:var(--text2);border:1px solid #cbd5e1}
+
+.status-msg{padding:10px 14px;border-radius:var(--radius-sm);font-size:0.83rem;font-weight:600;margin-bottom:14px;display:none}
+.status-msg.show{display:block}
+.status-ok{background:var(--ok-bg);color:var(--ok);border:1px solid rgba(22,163,74,0.3)}
+.status-err{background:var(--err-bg);color:var(--err);border:1px solid rgba(220,38,38,0.3)}
+
+/* OFFICIAL RECEIPT LAYOUT */
+.receipt-paper{
+  background:#fff;
+  border:2px solid #0f172a;
+  padding:24px;
+  width:100%;
+  max-width:540px;
+  margin:0 auto;
+  color:#0f172a;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+  border-radius:6px;
+  text-align:left;
+}
+.receipt-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:2px solid #0f172a;
+  padding-bottom:12px;
+  margin-bottom:14px;
+}
+.receipt-header img.clg-logo{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+}
+.receipt-header-text{
+  flex-grow:1;
+  text-align:center;
+}
+.receipt-header-text h2{
+  font-size:1.05rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  line-height:1.2;
+}
+.receipt-header-text p{
+  font-size:0.75rem;
+  font-weight:700;
+  color:var(--p2);
+  margin-top:2px;
+}
+.receipt-meta-top{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.75rem;
+  font-weight:600;
+  color:#475569;
+  margin-bottom:12px;
+  border-bottom:1px dashed #cbd5e1;
+  padding-bottom:6px;
+}
+.receipt-details-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.82rem;
+  margin-bottom:14px;
+}
+.receipt-details-table td{
+  padding:5px 0;
+  vertical-align:top;
+}
+.receipt-details-table td.label{
+  font-weight:700;
+  color:#334155;
+  width:32%;
+}
+.particulars-box{
+  border:1.5px solid #0f172a;
+  border-radius:4px;
+  padding:10px;
+  margin-bottom:14px;
+  font-size:0.8rem;
+}
+.particulars-row{
+  display:flex;
+  justify-content:space-between;
+  font-weight:700;
+  border-bottom:1px solid #e2e8f0;
+  padding-bottom:6px;
+  margin-bottom:6px;
+}
+.amount-words{
+  font-size:0.75rem;
+  font-style:italic;
+  color:#475569;
+}
+
+/* DIGITAL SIGNATURE SECTION (TWO SEPARATE BOXES) */
+.signatures-container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid #cbd5e1;
+}
+
+.digi-sig-card{
+  border:1px solid #16a34a;
+  background:#f0fdf4;
+  padding:8px 10px;
+  border-radius:4px;
+  font-size:0.68rem;
+  color:#0f172a;
+  line-height:1.35;
+}
+.digi-sig-title{
+  font-weight:800;
+  font-size:0.75rem;
+  color:#16a34a;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-bottom:4px;
+}
+.digi-sig-tick{
+  display:inline-block;
+  width:15px;
+  height:15px;
+  background:#16a34a;
+  color:#fff;
+  border-radius:50%;
+  text-align:center;
+  line-height:15px;
+  font-weight:bold;
+  font-size:9px;
+}
+.digi-sig-name{
+  font-size:0.75rem;
+  font-weight:700;
+  color:#0f172a;
+  margin-top:2px;
+}
+.digi-sig-desig{
+  font-weight:700;
+  color:#334155;
+}
+.digi-sig-dept{
+  color:#64748b;
+  font-size:0.63rem;
+  margin-bottom:4px;
+}
+.digi-sig-time{
+  font-size:0.62rem;
+  color:#475569;
+  border-top:1px dashed #bbf7d0;
+  padding-top:3px;
+  margin-top:3px;
+}
+
+.qr-center-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  margin-top:10px;
+}
+
+@media print{
+  body *{visibility:hidden}
+  #receipt-printable, #receipt-printable *{visibility:visible}
+  #receipt-printable{position:absolute;left:0;top:0;width:100%;border:none}
+}
+
+#reader{width:100%;max-width:400px;margin:0 auto}
+.verify-card{text-align:center;padding:20px;border-radius:var(--radius-sm)}
+.verify-card.success{background:var(--ok-bg);border:2px solid var(--ok);color:var(--ok)}
+.verify-card.fail{background:var(--err-bg);border:2px solid var(--err);color:var(--err)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">🎮 Free Fire Esports Pass <span style="font-size:0.75rem;color:var(--text3)">Admin Portal</span></div>
+    <button class="btn btn-ghost" onclick="toggleScanner()">📷 Scan QR to Verify</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="status-msg" class="status-msg"></div>
+
+  <!-- SETUP CARD -->
+  <div class="card">
+    <h3>⚙️ GitHub Sync Setup</h3>
+    <div class="frow" style="margin-top:10px">
+      <div class="fgroup"><label>PAT Token</label><input type="password" id="gh-token" placeholder="ghp_xxx"></div>
+      <div class="fgroup"><label>Owner</label><input type="text" id="gh-owner" value="chauhanvjay21-png"></div>
+      <div class="fgroup"><label>Repo</label><input type="text" id="gh-repo" value="PI"></div>
+      <div class="fgroup"><label>Branch</label><input type="text" id="gh-branch" value="main"></div>
+      <div class="fgroup"><label>File Path</label><input type="text" id="gh-path" value="players.json"></div>
+    </div>
+    <button class="btn btn-primary" onclick="saveSettings()">Save & Sync Database</button>
+  </div>
+
+  <div class="grid">
+    <!-- PLAYER SELECTION FORM -->
+    <div class="card">
+      <h3>👥 Select Registered Player or Add New</h3>
+      
+      <div class="fgroup" style="margin-top:12px">
+        <label>Select Registered Player (from Database)</label>
+        <select id="player-select" onchange="onPlayerSelect(this.value)">
+          <option value="">— Choose a player to generate receipt —</option>
+        </select>
+      </div>
+
+      <hr style="margin:16px 0;border:0;border-top:1px solid #e2e8f0">
+
+      <div class="frow">
+        <div class="fgroup">
+          <label>Player Name</label>
+          <input type="text" id="p-name" placeholder="Full Name">
+        </div>
+        <div class="fgroup">
+          <label>Contact No.</label>
+          <input type="text" id="p-contact" placeholder="Mobile Number">
+        </div>
+      </div>
+
+      <div class="frow">
+        <div class="fgroup">
+          <label>Email Address</label>
+          <input type="email" id="p-email" placeholder="player@gmail.com">
+        </div>
+        <div class="fgroup">
+          <label>Branch</label>
+          <input type="text" id="p-branch" placeholder="e.g. Agriculture / Biotech">
+        </div>
+      </div>
+
+      <div class="frow">
+        <div class="fgroup">
+          <label>Year of Study</label>
+          <select id="p-year">
+            <option value="First">First</option>
+            <option value="Second">Second</option>
+            <option value="Third">Third</option>
+            <option value="Fourth">Fourth</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Registration Fee</label>
+          <input type="text" id="p-amount" value="₹30.00" readonly>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="margin-top:12px;width:100%" id="btn-submit" onclick="generateAndSave()">Generate Receipt & Save to GitHub</button>
+    </div>
+
+    <!-- OFFICIAL RECEIPT PREVIEW -->
+    <div class="card" style="text-align:center">
+      <h3>📄 Official Receipt Preview</h3>
+      
+      <div style="margin-top:14px" id="receipt-printable">
+        <div class="receipt-paper" id="receipt-paper">
+          
+          <div class="receipt-header">
+            <img src="https://agri.kkwagh.edu.in/assets/front_end/images/logo.png" alt="College Logo" class="clg-logo" id="r-logo">
+            <div class="receipt-header-text">
+              <h2>K.K. WAGH COLLEGE OF AGRICULTURAL BIOTECHNOLOGY</h2>
+              <p>Free Fire Esports Season - 1</p>
+            </div>
+          </div>
+
+          <div class="receipt-meta-top">
+            <span><b>Receipt No:</b> <span id="r-id">REG-XXXXXX</span></span>
+            <span><b>Date:</b> <span id="r-date">—</span></span>
+          </div>
+
+          <table class="receipt-details-table">
+            <tr>
+              <td class="label">Player Name:</td>
+              <td id="r-name" style="font-weight:700">—</td>
+            </tr>
+            <tr>
+              <td class="label">Branch Name:</td>
+              <td id="r-branch">—</td>
+            </tr>
+            <tr>
+              <td class="label">Year of Study:</td>
+              <td id="r-year">—</td>
+            </tr>
+            <tr>
+              <td class="label">Contact No.:</td>
+              <td id="r-contact">—</td>
+            </tr>
+          </table>
+
+          <div class="particulars-box">
+            <div class="particulars-row">
+              <span>Particulars</span>
+              <span>Amount</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Entry Fees (Free Fire Esports Season - 1)</span>
+              <span style="font-weight:700">₹30.00</span>
+            </div>
+            <div class="amount-words">
+              <b>Amount in Words:</b> Thirty Rupees Only
+            </div>
+          </div>
+
+          <div class="qr-center-wrap">
+            <div id="qrcode" style="width:70px;height:70px"></div>
+            <small style="font-size:0.58rem;color:#64748b;margin-top:3px">Scan to Verify Entry</small>
+          </div>
+
+          <!-- SEPARATE DUAL OFFICIAL DIGITAL SIGNATURES -->
+          <div class="signatures-container">
+            
+            <!-- FUND MANAGER SIGNATURE BLOCK -->
+            <div class="digi-sig-card">
+              <div class="digi-sig-title">
+                <span class="digi-sig-tick">✓</span> Signature Valid
+              </div>
+              <div>Digitally Signed by</div>
+              <div class="digi-sig-name">Prajwal Chochande</div>
+              <div class="digi-sig-desig">Fund Manager</div>
+              <div class="digi-sig-dept">eSports Committee</div>
+              <div class="digi-sig-time" id="r-sig-time-1">Date: --/--/---- --:--</div>
+            </div>
+
+            <!-- EVENT COORDINATOR SIGNATURE BLOCK -->
+            <div class="digi-sig-card">
+              <div class="digi-sig-title">
+                <span class="digi-sig-tick">✓</span> Signature Valid
+              </div>
+              <div>Digitally Signed by</div>
+              <div class="digi-sig-name">Vijay Chauhan</div>
+              <div class="digi-sig-desig">Coordinator</div>
+              <div class="digi-sig-dept">eSports Committee</div>
+              <div class="digi-sig-time" id="r-sig-time-2">Date: --/--/---- --:--</div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button class="btn btn-success" onclick="downloadPDF()">📥 Download PDF</button>
+        <button class="btn btn-ghost" onclick="window.print()">🖨️ Print Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCANNER SECTION -->
+  <div class="card" id="scanner-section" style="display:none">
+    <h3>🔍 Player Verification Scanner</h3>
+    <div id="reader"></div>
+    <div id="verify-result" style="margin-top:15px"></div>
+  </div>
+</div>
+
+<script>
+const CFG_KEY = 'esports_portal_cfg_v2';
+let config = JSON.parse(localStorage.getItem(CFG_KEY)) || { 
+  token:'', 
+  owner:'chauhanvjay21-png', 
+  repo:'PI', 
+  branch:'main', 
+  path:'players.json' 
+};
+let playersData = [];
+let currentSha = null;
+let qrCodeObj = null;
+let currentActivePlayerName = "Player";
+let currentActiveRegId = "REG-101001";
+
+function showStatus(msg, type){
+  const el = document.getElementById('status-msg');
+  el.textContent = msg; el.className = 'status-msg show status-' + type;
+  if(type !== 'err') setTimeout(()=>{ el.classList.remove('show'); }, 4000);
+}
+
+function init(){
+  document.getElementById('gh-token').value = config.token;
+  document.getElementById('gh-owner').value = config.owner;
+  document.getElementById('gh-repo').value = config.repo;
+  document.getElementById('gh-branch').value = config.branch;
+  document.getElementById('gh-path').value = config.path;
+  
+  qrCodeObj = new QRCode(document.getElementById("qrcode"), { width: 70, height: 70 });
+  if(config.token && config.owner && config.repo) fetchRepoData();
+}
+
+function saveSettings(){
+  config = {
+    token: document.getElementById('gh-token').value.trim(),
+    owner: document.getElementById('gh-owner').value.trim(),
+    repo: document.getElementById('gh-repo').value.trim(),
+    branch: document.getElementById('gh-branch').value.trim() || 'main',
+    path: document.getElementById('gh-path').value.trim() || 'players.json'
+  };
+  localStorage.setItem(CFG_KEY, JSON.stringify(config));
+  showStatus('Configuration saved!', 'ok');
+  fetchRepoData();
+}
+
+function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
+function b64decode(b64){ return decodeURIComponent(escape(atob(b64.replace(/\n/g,'')))); }
+
+async function fetchRepoData(){
+  if(!config.token) return;
+  showStatus('Syncing with GitHub database...', 'ok');
+  const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${encodeURIComponent(config.path)}?ref=${config.branch}`;
+  try {
+    const res = await fetch(url, { headers: { 'Authorization': 'token ' + config.token, 'Accept': 'application/vnd.github+json' } });
+    if(res.ok){
+      const json = await res.json();
+      currentSha = json.sha;
+      const content = JSON.parse(b64decode(json.content));
+      playersData = content.players || [];
+      populateDropdown();
+      showStatus(`Database Loaded! ${playersData.length} players synced.`, 'ok');
+    }
+  } catch(e) { showStatus('Fetch Error: ' + e.message, 'err'); }
+}
+
+function populateDropdown(){
+  const sel = document.getElementById('player-select');
+  sel.innerHTML = '<option value="">— Choose a player to generate receipt —</option>' +
+    playersData.map((p, idx) => `<option value="${idx}">${p.name} (${p.branch || 'N/A'}) - ${p.id || 'Pending'}</option>`).join('');
+}
+
+function onPlayerSelect(indexStr){
+  if(indexStr === "") return;
+  const p = playersData[parseInt(indexStr)];
+  
+  document.getElementById('p-name').value = p.name || '';
+  document.getElementById('p-contact').value = p.contact || '';
+  document.getElementById('p-email').value = p.email || '';
+  document.getElementById('p-branch').value = p.branch || '';
+  document.getElementById('p-year').value = p.year || 'Second';
+
+  renderReceipt(p.id || ('REG-' + Math.floor(100000 + Math.random() * 900000)), p);
+}
+
+function renderReceipt(regId, p){
+  currentActivePlayerName = p.name || "Player";
+  currentActiveRegId = regId;
+
+  document.getElementById('r-id').textContent = regId;
+  document.getElementById('r-name').textContent = p.name || '—';
+  document.getElementById('r-contact').textContent = p.contact || '—';
+  document.getElementById('r-branch').textContent = p.branch || '—';
+  document.getElementById('r-year').textContent = p.year || '—';
+  
+  const now = new Date();
+  const dateStr = p.timestamp ? p.timestamp : now.toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'medium' });
+  
+  document.getElementById('r-date').textContent = dateStr.split(',')[0];
+  document.getElementById('r-sig-time-1').textContent = "Date: " + dateStr;
+  document.getElementById('r-sig-time-2').textContent = "Date: " + dateStr;
+  
+  qrCodeObj.clear();
+  qrCodeObj.makeCode(regId);
+}
+
+async function generateAndSave(){
+  const name = document.getElementById('p-name').value.trim();
+  if(!name){ showStatus('Please enter player name', 'err'); return; }
+
+  const selIdx = document.getElementById('player-select').value;
+  let regId = 'REG-' + Math.floor(100000 + Math.random() * 900000);
+
+  const pRecord = {
+    id: regId,
+    timestamp: new Date().toLocaleString('en-IN'),
+    name: name,
+    contact: document.getElementById('p-contact').value.trim(),
+    email: document.getElementById('p-email').value.trim(),
+    branch: document.getElementById('p-branch').value.trim(),
+    year: document.getElementById('p-year').value,
+    event: "Free Fire Esports Season - 1",
+    amount: "₹30.00",
+    verified: true
+  };
+
+  if(selIdx !== ""){
+    regId = playersData[parseInt(selIdx)].id || regId;
+    pRecord.id = regId;
+    playersData[parseInt(selIdx)] = pRecord;
+  } else {
+    playersData.push(pRecord);
+  }
+
+  renderReceipt(regId, pRecord);
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true; btn.textContent = 'Saving to GitHub...';
+
+  const body = {
+    message: `Update Free Fire Esports receipt ${regId} for ${name}`,
+    content: b64encode(JSON.stringify({ players: playersData }, null, 2)),
+    branch: config.branch
+  };
+  if(currentSha) body.sha = currentSha;
+
+  try {
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${encodeURIComponent(config.path)}`;
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + config.token, 'Content-Type':'application/json' },
+      body: JSON.stringify(body)
+    });
+    if(res.ok){
+      const resJson = await res.json();
+      currentSha = resJson.content.sha;
+      populateDropdown();
+      showStatus(`Receipt ${regId} committed permanently to GitHub!`, 'ok');
+    }
+  } catch(e){ showStatus('Save failed: ' + e.message, 'err'); }
+  finally { btn.disabled = false; btn.textContent = 'Generate Receipt & Save to GitHub'; }
+}
+
+function downloadPDF(){
+  const element = document.getElementById('receipt-paper');
+  const sanitizedName = currentActivePlayerName.replace(/[^a-zA-Z0-9]/g, '_');
+  const filename = `Receipt_${sanitizedName}_${currentActiveRegId}.pdf`;
+
+  const opt = {
+    margin:       [0.2, 0.2, 0.2, 0.2],
+    filename:     filename,
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true },
+    jsPDF:        { unit: 'in', format: 'a5', orientation: 'portrait' }
+  };
+
+  showStatus(`Generating PDF: ${filename}...`, 'ok');
+  html2pdf().set(opt).from(element).save();
+}
+
+let html5QrcodeScanner = null;
+function toggleScanner(){
+  const sec = document.getElementById('scanner-section');
+  if(sec.style.display === 'none'){
+    sec.style.display = 'block';
+    html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250, facingMode: "environment" });
+    html5QrcodeScanner.render(onScanSuccess);
+  } else {
+    sec.style.display = 'none';
+    if(html5QrcodeScanner) html5QrcodeScanner.clear();
+  }
+}
+
+function onScanSuccess(decodedText) {
+  const resultDiv = document.getElementById('verify-result');
+  const match = playersData.find(p => p.id === decodedText.trim());
+  if(match){
+    resultDiv.className = 'verify-card success';
+    resultDiv.innerHTML = `<h3>✅ VERIFIED PARTICIPANT</h3><p><b>Name:</b> ${match.name}</p><p><b>Branch:</b> ${match.branch} (${match.year} Year)</p><p><b>Event:</b> Free Fire Esports Season - 1</p>`;
+  } else {
+    resultDiv.className = 'verify-card fail';
+    resultDiv.innerHTML = `<h3>❌ UNREGISTERED / INVALID RECEIPT</h3><p>No valid entry found for QR code ID: ${decodedText}</p>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
